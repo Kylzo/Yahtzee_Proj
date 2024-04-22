@@ -7,8 +7,8 @@ const Inscription = () => {
       <h1>Inscrivez vous à Yahtzee</h1>
       <form>
         <div className="label">
-          <label htmlFor="name">Nom</label>
-          <input id="name" name="name" type="text" />
+          <label htmlFor="name">Pseudo</label>
+          <input id="name" name="pseudo" type="text" />
         </div>
         <div className="label">
           <label htmlFor="email">Email</label>
