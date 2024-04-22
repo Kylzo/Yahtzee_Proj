@@ -51,8 +51,8 @@ const Navbar = () => {
           <Link to="/inscription" className="hidden">
             {register}
           </Link>
-          <div className="popup" ref={popupRef}>
-            <button onClick={popup} className="btn-navigation show">
+          <div className="popup show" ref={popupRef}>
+            <button onClick={popup} className="btn-navigation">
               <i className="fa-solid fa-ellipsis-vertical"></i>
             </button>
             {open && (

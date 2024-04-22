@@ -1,0 +1,113 @@
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-top: 2rem;
+}
+
+.alert {
+    width: 100%;
+    background-color: rgb(252, 208, 127);
+    border: 1px solid rgb(247, 182, 62);
+    text-align: center;
+    padding: 0.5rem 0;
+    border-radius: 5px;
+    color: rgb(121, 79, 0);
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.roll-dice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.dice {
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+.held {
+    color: #3c3c3c;
+}
+
+.shaking {
+    animation-name: wobble;
+    animation-duration: 1s;
+}
+
+.btn-roll {
+    margin: 2rem 0;
+    padding: 0.4rem 2rem;
+    border: none;
+    border-radius: 0.4rem;
+    align-self: center;
+    font-size: 0.8rem;
+    color: #fff;
+    background-color: #000;
+}
+
+@media (min-width: 640px) {
+    .alert {
+        padding: 0.8rem 0;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+    }
+
+    .roll-dice {
+        gap: 2rem;
+    }
+
+    .dice {
+        font-size: 5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .alert {
+        padding: 1rem 0;
+        font-size: 1rem;
+        margin-bottom: 3rem;
+    }
+
+    .roll-dice {
+        gap: 3rem;
+    }
+
+    .dice {
+        font-size: 7rem;
+    }
+
+    .btn-roll {
+        margin: 4rem 0;
+        padding: 0.8rem 3rem;
+        border-radius: 0.4rem;
+        align-self: center;
+        font-size: 1rem;
+    }
+}
+
+@keyframes wobble {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    15% {
+        transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    }
+    30% {
+        transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+    }
+    45% {
+        transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    }
+    60% {
+        transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    }
+    75% {
+        transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
