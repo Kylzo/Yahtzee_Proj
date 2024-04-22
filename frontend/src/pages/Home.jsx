@@ -3,7 +3,7 @@ import "../styles/Home.css";
 
 const Home = () => {
   return (
-    <main>
+    <main className="home">
       {/* Button paramètres */}
       <div className="action-btn">
         <button className="parametres">
