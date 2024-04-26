@@ -20,7 +20,7 @@ const Inscription = () => {
         </div>
         <button className="button">S'incrire</button>
       </form>
-      <p>
+      <p className="account-message">
         Vous possédez déjà un compte ?{" "}
         <Link to="/connexion" className="link">
           Connexion

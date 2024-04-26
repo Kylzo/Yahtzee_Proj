@@ -16,7 +16,7 @@ const Connexion = () => {
         </div>
         <button className="button">Se connecter</button>
       </form>
-      <p>
+      <p className="account-message">
         Vous ne possédez pas de compte ?{" "}
         <Link to="/inscription" className="link">
           Inscription
