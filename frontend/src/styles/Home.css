@@ -1,15 +1,16 @@
-main {
+.home {
 	max-width: 80rem;
-    margin: 0 auto;
+    margin: 0.5rem auto 0 auto;
     padding: 0 0.6rem;
 }
 
-.action-btn {
+.container-action-btn {
     display: flex;
     justify-content: end;
+    gap: 1.5rem;
 }
 
-.parametres {
+.action-btn {
     width: 1.5rem;
     height: 1.5rem;
     display: flex;
@@ -22,13 +23,13 @@ main {
 }
 
 @media (min-width: 768px) {
-    .action-btn {
+    .container-action-btn {
         margin-top: 1.5rem;
     }
 
-    .parametres {
-        width: 2rem;
-        height: 2rem;
-        font-size: 1rem;
+    .action-btn {
+        width: 2.2rem;
+        height: 2.2rem;
+        font-size: 1.1rem;
     }
 }

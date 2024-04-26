@@ -1,0 +1,89 @@
+.chat {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Close button */
+.close-container {
+    width: 100%;
+    height: 6%;
+    display: flex;
+    justify-content: end;
+    padding: 0 1.5rem;
+}
+
+.close-btn {
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Chat messages */
+.chat-container {
+    width: 100%;
+    height: 84%;
+    overflow-y: scroll;
+    padding: 0.5rem 1.5rem 2rem 1.5rem;
+}
+
+.list-chat {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.message-section {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.message-section .user {
+    font-weight: bold;
+}
+
+/* Input text */
+.message-container {
+    width: 100%;
+    height: 10%;
+    box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.5rem;
+}
+
+.message-container .input-message {
+    border: none;
+    background-color: #F5F5F5;
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 5px;
+}
+
+.message-container .input-message:focus {
+    outline: none;
+}
+
+.send-message-btn {
+    border: none;
+    background-color: #F5F5F5;
+    height: 2.5rem;
+    border-radius: 5px;
+    padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+    .chat {
+        width: 35rem;
+    }
+}
