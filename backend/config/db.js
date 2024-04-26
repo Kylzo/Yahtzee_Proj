@@ -13,15 +13,15 @@ async function initData() {
 
   // Création de la table Player
   const createPlayerStatement = db.prepare(`
- CREATE TABLE IF NOT EXISTS Player (
+  CREATE TABLE IF NOT EXISTS Player (
     id_player INTEGER PRIMARY KEY,
     avatar TEXT,
     pseudo TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    id_role INTEGER NOT NULL,
+    id_role INTEGER,
     FOREIGN KEY(id_role) REFERENCES Role(id_role)
- )
+  )
 `);
   createPlayerStatement.run();
 
