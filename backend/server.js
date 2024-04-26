@@ -1,10 +1,18 @@
 import express from "express";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import jwtMiddleware from "./middlewares/jwt.middleware.js";
 import playerRoutes from "./routes/player.route.js";
 import authRoutes from "./routes/auth.route.js";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+    credentials: true, // Nécessaire pour autoriser l'envoi de cookies
+  })
+);
 
 // Utiliser cookie-parser
 app.use(cookieParser());

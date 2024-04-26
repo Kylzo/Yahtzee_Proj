@@ -12,6 +12,13 @@ li {
     display: none;
 }
 
+.btn-deco {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
 .show {
     display: block;
 }
