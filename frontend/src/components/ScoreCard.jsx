@@ -1,22 +1,41 @@
-const scoreCard = ({ scores, selectCategory }) => {
+import React from "react";
+
+const ScoreCard = ({ scores, onScoreSelect }) => {
+  const handleClick = (category) => {
+    if (!scores[category].used) {
+      onScoreSelect(category);
+    }
+  };
+
   return (
-    <div>
-      <h3>Feuille de score</h3>
-      <ul>
-        {Object.keys(scores).map((category) => (
-          <li key={category}>
-            {category}: {scores[category] === null ? "Vide" : scores[category]}
-            <button
-              onClick={() => selectCategory(category)}
-              disabled={scores[category] !== null}
-            >
-              Choisir
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className="score-card">
+      <h2>Score Card</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Catégorie</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.keys(scores).map((category, index) => (
+            <tr key={index}>
+              <td>{category}</td>
+              <td>
+                {scores[category].used ? (
+                  <span>{scores[category].value}</span>
+                ) : (
+                  <button onClick={() => handleClick(category)}>
+                    Remplir
+                  </button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default scoreCard;
+export default ScoreCard;

@@ -1,4 +1,6 @@
+import React from "react";
 import Dice from "./Dice";
+import TotalScore from "./TotalScore";
 import "../styles/Dice.css";
 import { useState } from "react";
 
@@ -11,7 +13,7 @@ const RollDice = ({ sides }) => {
   const [heldDice, setHeldDice] = useState([false, false, false, false, false]); // Dés retenus
   const [rolling, setRolling] = useState(false);
   const [rollCount, setRollCount] = useState(0);
-  const maxRolls = 2;
+  const maxRolls = 30;
 
   const roll = () => {
     if (rollCount >= maxRolls || rolling) {
@@ -34,16 +36,18 @@ const RollDice = ({ sides }) => {
   };
 
   const toggleHold = (index) => {
+    if (rollCount === 0) {
+      return; // Ne rien faire si le nombre maximum de lancers est atteint
+    }
+
     const newHeldDice = [...heldDice];
     newHeldDice[index] = !newHeldDice[index];
     setHeldDice(newHeldDice);
   };
 
+
   return (
     <div className="container">
-      {rollCount >= maxRolls && (
-        <p className="alert">Vous n'avez plus de lancés</p>
-      )}
       <div className="roll-dice">
         {dice.map((die, index) => (
           <Dice
@@ -59,14 +63,17 @@ const RollDice = ({ sides }) => {
         onClick={roll}
         disabled={rolling || rollCount >= maxRolls}
         style={
-          rolling || rollCount >= maxRolls
-            ? { cursor: "not-allowed", background: "#3c3c3c" }
-            : { cursor: "pointer" }
+          rollCount >= maxRolls
+            ? { cursor: "not-allowed", background: "red" }
+            : rollCount >= 0
+              ? { cursor: "pointer", background: "green" }
+              : { cursor: "pointer" }
         }
         className="btn-roll"
       >
-        {rolling ? "En cours..." : `Lancer les dés (${maxRolls - rollCount})`}
-      </button>
+        {rolling ? "En cours..." : `Il te reste ${maxRolls - rollCount} lancé(s)`}
+      </button>      
+      <TotalScore dice={dice} heldDice={heldDice} />
     </div>
   );
 };

@@ -15,9 +15,6 @@ const Home = () => {
       <div>
         <RollDice />
       </div>
-
-      {/* Feuilles des scores */}
-      <div></div>
     </main>
   );
 };
