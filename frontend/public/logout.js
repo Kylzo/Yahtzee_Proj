@@ -4,5 +4,5 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.removeItem("jwt");
 
   // Rediriger l'utilisateur vers la page de connexion
-  window.location.href = "/login";
+  window.location.href = "/connexion";
 });
