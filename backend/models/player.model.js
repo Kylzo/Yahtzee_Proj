@@ -12,7 +12,7 @@ const Player = {
   },
 
   create: (pseudo, email, password, avatar = null) => {
-    const defaultRoleId = 2; // ID du rôle joueur selon vos données fictives
+    const defaultRoleId = 2; // ID du rôle joueur par défaut à modifier
     return db
       .prepare(
         `
@@ -36,7 +36,7 @@ const Player = {
   },
 
   setDefaultRole: (roleId) => {
-    const defaultRoleId = 2; // ID du rôle joueur selon vos données fictives
+    const defaultRoleId = 2;
     return db
       .prepare(
         `

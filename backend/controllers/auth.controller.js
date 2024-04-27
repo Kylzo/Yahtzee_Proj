@@ -1,5 +1,11 @@
 import jwt from "jsonwebtoken";
 import Player from "../models/auth.model.js";
+import dotenv from "dotenv";
+
+// Charger les variables d'environnement à partir du fichier .env
+dotenv.config();
+
+const secretKey = process.env.SECRET_KEY;
 
 const authController = {
   signUp: async (req, res) => {
@@ -15,9 +21,9 @@ const authController = {
 
       const newPlayer = await Player.create(pseudo, email, password);
 
-      // Générer un jeton JWT
-      const token = jwt.sign({ playerId: newPlayer.id }, "your-secret-key", {
-        expiresIn: "1h", // Durée de validité du token (ici, 1 heure)
+      // Générer un jeton JWT avec la clé secrète obtenue des variables d'environnement
+      const token = jwt.sign({ playerId: newPlayer.id }, secretKey, {
+        expiresIn: "1h",
       });
 
       // Stocker le jeton JWT dans les cookies
@@ -59,8 +65,16 @@ const authController = {
       }
 
       // Générer un jeton JWT
-      const token = jwt.sign({ playerId: player.id }, "your-secret-key", {
-        expiresIn: "1h", // Durée de validité du token (1 heure)
+      const token = jwt.sign({ playerId: player.id }, secretKey, {
+        expiresIn: "1h",
+      });
+
+      // Stocker le jeton JWT dans les cookies
+      res.cookie("jwt-token", token, {
+        maxAge: 3600000, // Durée de validité du cookie en millisecondes (1 heure)
+        httpOnly: true, // Rend le cookie inaccessible via JavaScript côté client
+        secure: true, // Le cookie ne sera envoyé que via HTTPS
+        sameSite: "strict", // Le cookie n'est envoyé que pour les requêtes provenant du même site
       });
 
       res.status(200).json({ message: "Connexion réussie", token });
