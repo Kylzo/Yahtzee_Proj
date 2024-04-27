@@ -13,8 +13,8 @@ const jwtMiddleware = (req, res, next) => {
   }
 
   try {
-    // Vérifier la validité du jeton JWT
-    const decodedToken = jwt.verify(token, "your-secret-key");
+    // Vérifier la validité du jeton JWT en utilisant la clé secrète stockée dans les variables d'environnement
+    const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
 
     // Ajouter les informations utilisateur décryptées à la requête
     req.playerId = decodedToken.playerId;

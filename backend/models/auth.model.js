@@ -25,24 +25,26 @@ const Player = {
 
       const newPlayerId = newPlayer ? newPlayer.id_player : null;
 
-      // Récupérer les détails du joueur créé
+      // Récupérer les infos du joueur créé
       const createdPlayer = await Player.getById(newPlayerId);
 
       return createdPlayer;
     } catch (error) {
-      throw new Error("Failed to create player: " + error.message);
+      throw new Error("Échec de la création du joueur : " + error.message);
     }
   },
 
   getById: async (playerId) => {
     try {
-      // Récupérer les détails du joueur à partir de l'ID
+      // Récupérer les infos du joueur à partir de l'ID
       const player = await db
         .prepare("SELECT * FROM Player WHERE id_player = ?")
         .get(playerId);
       return player;
     } catch (error) {
-      throw new Error("Failed to get player by ID: " + error.message);
+      throw new Error(
+        "Échec de la récupération du joueur par ID : " + error.message
+      );
     }
   },
 
@@ -54,7 +56,9 @@ const Player = {
         .get(email, password);
       return player;
     } catch (error) {
-      throw new Error("Failed to authenticate player: " + error.message);
+      throw new Error(
+        "Échec de l'authentification du joueur : " + error.message
+      );
     }
   },
 };

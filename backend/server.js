@@ -1,20 +1,17 @@
+// server.js
 import express from "express";
-import cors from "cors";
+import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import jwtMiddleware from "./middlewares/jwt.middleware.js";
 import playerRoutes from "./routes/player.route.js";
 import authRoutes from "./routes/auth.route.js";
+import gameRoutes from "./routes/game.route.js"; // Ajout des routes de jeu
+
+// Charger les variables d'environnement à partir du fichier .env
+dotenv.config();
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "http://localhost:3001",
-    credentials: true, // Nécessaire pour autoriser l'envoi de cookies
-  })
-);
-
-// Utiliser cookie-parser
 app.use(cookieParser());
 
 // Middleware pour l'analyse des corps de requête JSON (uniquement pour les requêtes POST, PUT, PATCH, etc.)
@@ -29,19 +26,8 @@ app.use((req, res, next) => {
 // Utilisation des routes d'authentification
 app.use("/api", authRoutes);
 
-// Route pour définir le cookie JWT (peut être supprimée si elle n'est pas nécessaire)
-app.get("/set-cookie", (req, res) => {
-  // Définir un cookie avec le nom "jwt-token" et la valeur "your-token-value"
-  res.cookie("jwt-token", "your-token-value", {
-    // Options du cookie
-    maxAge: 3600000, // Durée de validité en millisecondes (1 heure dans cet exemple)
-    httpOnly: true, // Rend le cookie inaccessible via JavaScript côté client
-    secure: true, // Le cookie ne sera envoyé que via HTTPS
-    sameSite: "strict", // Le cookie n'est envoyé que pour les requêtes provenant du même site
-  });
-
-  res.send("Cookie défini avec succès !");
-});
+// Utilisation des routes de jeu
+app.use("/api", gameRoutes);
 
 // Utilisation du middleware JWT après les routes d'authentification
 app.use(jwtMiddleware);
