@@ -1,14 +1,17 @@
-// player.route.js
-
 import { Router } from "express";
-import playerController from "../controllers/player.controller.js"; // Importez playerController
+import {
+  getAllPlayers,
+  playerInfo,
+  updatePlayer,
+  deletePlayer,
+} from "../controllers/player.controller.js";
 
 const router = Router();
 
 // Routes pour les joueurs
-router.get("/players", playerController.getAllPlayers);
-router.get("/:id", playerController.playerInfo);
-router.put("/:id", playerController.updatePlayer);
-router.delete("/:id", playerController.deletePlayer);
+router.get("/players", getAllPlayers);
+router.get("/:id", playerInfo);
+router.put("/:id", updatePlayer);
+router.delete("/:id", deletePlayer);
 
 export default router;
