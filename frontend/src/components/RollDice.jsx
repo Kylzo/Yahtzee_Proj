@@ -1,23 +1,25 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import Dice from "./Dice";
 import TotalScore from "./TotalScore";
 import "../styles/Dice.css";
-import { useState } from "react";
+
+// Importez votre fichier audio roll-sound.mp3
+import rollSound from "../assets/roll-sound.mp3";
 
 const RollDice = ({ sides }) => {
-  // Initialiser les dés avec des valeurs aléatoires et créer les états de maintien des dés
   const initialDice = Array(5)
     .fill()
     .map(() => sides[Math.floor(Math.random() * sides.length)]);
   const [dice, setDice] = useState(initialDice);
-  const [heldDice, setHeldDice] = useState([false, false, false, false, false]); // Dés retenus
+  const [heldDice, setHeldDice] = useState([false, false, false, false, false]);
   const [rolling, setRolling] = useState(false);
   const [rollCount, setRollCount] = useState(0);
-  const maxRolls = 30;
+  const maxRolls = 3;
+  const audioRef = useRef();
 
   const roll = () => {
     if (rollCount >= maxRolls || rolling) {
-      return; // Pas de lancer supplémentaire si le maximum est atteint ou si en cours de lancer
+      return;
     }
 
     setRolling(true);
@@ -29,7 +31,9 @@ const RollDice = ({ sides }) => {
     setDice(newDice);
     setRollCount(rollCount + 1);
 
-    // Arrête le roulement après une seconde
+    // Jouez le son de déroulement
+    audioRef.current.play();
+
     setTimeout(() => {
       setRolling(false);
     }, 1000);
@@ -37,7 +41,7 @@ const RollDice = ({ sides }) => {
 
   const toggleHold = (index) => {
     if (rollCount === 0) {
-      return; // Ne rien faire si le nombre maximum de lancers est atteint
+      return;
     }
 
     const newHeldDice = [...heldDice];
@@ -45,20 +49,21 @@ const RollDice = ({ sides }) => {
     setHeldDice(newHeldDice);
   };
 
-
   return (
     <div className="container">
+      <audio ref={audioRef} src={rollSound} />
       <div className="roll-dice">
         {dice.map((die, index) => (
           <Dice
             key={index}
-            face={Object.keys(die)[0]} // Afficher la face du dé
+            face={Object.keys(die)[0]}
             rolling={rolling}
-            onClick={() => toggleHold(index)} // Permet de retenir ou de relâcher un dé
-            held={heldDice[index]} // Indique si le dé est retenu
+            onClick={() => toggleHold(index)}
+            held={heldDice[index]}
           />
         ))}
       </div>
+      <TotalScore dice={dice} heldDice={heldDice} />
       <button
         onClick={roll}
         disabled={rolling || rollCount >= maxRolls}
@@ -72,8 +77,7 @@ const RollDice = ({ sides }) => {
         className="btn-roll"
       >
         {rolling ? "En cours..." : `Il te reste ${maxRolls - rollCount} lancé(s)`}
-      </button>      
-      <TotalScore dice={dice} heldDice={heldDice} />
+      </button>
     </div>
   );
 };

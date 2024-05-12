@@ -38,7 +38,7 @@
 }
 
 .btn-roll {
-    margin: 2rem 0;
+    margin: 1rem 0;
     padding: 0.4rem 2rem;
     border: none;
     border-radius: 0.4rem;
@@ -56,7 +56,7 @@
     }
 
     .roll-dice {
-        gap: 2rem;
+        gap: 1rem;
     }
 
     .dice {
@@ -76,11 +76,11 @@
     }
 
     .dice {
-        font-size: 7rem;
+        font-size: 5rem;
     }
 
     .btn-roll {
-        margin: 4rem 0;
+        margin: 1rem 0;
         padding: 0.8rem 3rem;
         border-radius: 0.4rem;
         align-self: center;

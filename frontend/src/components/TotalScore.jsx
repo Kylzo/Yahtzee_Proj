@@ -1,6 +1,7 @@
 import React from "react";
+import "../styles/TotalScore.css";
 
-const TotalScore = ({ dice, heldDice }) => {
+const TotalScore = ({ dice, heldDice, updateScoreFunction }) => {
   const calculateTotal = () => {
     let total = 0;
     dice.forEach((die, index) => {
@@ -73,11 +74,41 @@ const TotalScore = ({ dice, heldDice }) => {
     }
   };
 
+  const getCombinationName = () => {
+    const score = calculateCombinationScore();
+    switch (score) {
+      case 50:
+        return "Yahtzee";
+      case 40:
+        return "Grande Suite";
+      case 30:
+        return "Petite Suite";
+      case 25:
+        return "Full";
+      default:
+        if (score > 0) {
+          const values = dice.map((die) => Object.values(die)[0]);
+          const counts = {};
+          values.forEach(value => {
+            counts[value] = (counts[value] || 0) + 1;
+          });
+          const isFourOfAKind = Object.values(counts).some(count => count >= 4);
+          const isThreeOfAKind = Object.values(counts).some(count => count >= 3);
+          if (isFourOfAKind) {
+            return "Carré";
+          } else if (isThreeOfAKind) {
+            return "Brelan";
+          }
+        }
+        return "Aucune combinaison";
+    }
+  };
   return (
     <div className="held-dice">
-      <h2>Dés retenus :</h2>
       <p>Total: {calculateTotal()}</p>
-      <p>Score des combinaisons: {calculateCombinationScore()}</p>
+      <p className={calculateCombinationScore() === 50 ? "yahtzee" : ""}>
+        {getCombinationName()}: {calculateCombinationScore()}
+      </p>
     </div>
   );
 };
