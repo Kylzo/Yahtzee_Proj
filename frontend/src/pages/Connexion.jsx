@@ -8,7 +8,7 @@ const Connexion = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-    const { setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -27,7 +27,6 @@ const Connexion = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-        credentials: "include",
       });
       const data = await res.json();
 
@@ -41,10 +40,10 @@ const Connexion = () => {
       } else {
         setError(data.message);
       }
-      } catch (error) {
-        setLoading(false);
-        setError(true);
-      }
+    } catch (error) {
+      setLoading(false);
+      setError(true);
+    }
   };
 
   return (
@@ -57,7 +56,12 @@ const Connexion = () => {
         </div>
         <div className="label">
           <label htmlFor="password">Mot de passe</label>
-          <input id="password" name="password" type="text" onChange={handleChange} />
+          <input
+            id="password"
+            name="password"
+            type="text"
+            onChange={handleChange}
+          />
         </div>
         <button className="button">
           {loading ? "Chargement..." : "Se connecter"}
