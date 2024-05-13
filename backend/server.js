@@ -5,6 +5,7 @@ import jwtMiddleware from "./middlewares/jwt.middleware.js";
 import playerRoutes from "./routes/player.route.js";
 import authRoutes from "./routes/auth.route.js";
 import gameRoutes from "./routes/game.route.js";
+import roleRoutes from "./routes/role.route.js";
 import dotenv from "dotenv";
 
 // Charger les variables d'environnement à partir du fichier .env
@@ -39,6 +40,7 @@ app.use("/api", authRoutes);
 
 // Utilisation des routes de jeu
 app.use("/api", gameRoutes);
+app.use("/api", roleRoutes);
 
 // Utilisation du middleware JWT après les routes d'authentification
 app.use(jwtMiddleware);
