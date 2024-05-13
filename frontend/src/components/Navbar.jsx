@@ -70,7 +70,7 @@ const Navbar = () => {
         <div className="nav-right-part">
           {isAuthenticated ? (
             <>
-              <Link to="/inscription" className="hidden">
+              <Link to="/profil" className="hidden">
                 {profile}
               </Link>
               <button onClick={handleLogOut} className="hidden btn-deco">

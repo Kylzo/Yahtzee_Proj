@@ -1,0 +1,50 @@
+.profil {
+    max-width: 40rem;
+    margin: 1rem auto 0 auto;
+    padding: 0 1rem;
+}
+
+.container-modale {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.modale-delete-account {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    padding: 2rem;
+}
+
+.title-delete {
+    color: #000;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.modale-delete-account .container-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.modale-delete-account .container-btn button {
+    border: none;
+    border-radius: 0.3rem;
+    background-color: #000;
+    color: #fff;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+}

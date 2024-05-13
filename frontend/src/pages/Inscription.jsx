@@ -63,7 +63,7 @@ const Inscription = () => {
         </div>
         <div className="label">
           <label htmlFor="email">Email</label>
-          <input id="email" name="email" type="text" onChange={handleChange} />
+          <input id="email" name="email" type="email" onChange={handleChange} />
         </div>
         <div className="label">
           <label htmlFor="password">Mot de passe</label>
@@ -92,7 +92,7 @@ const Inscription = () => {
         <Link to="/connexion" className="link">
           Connexion
         </Link>
-        <p>{error && "Une erreur est survenue"}</p>
+        <p className="error-message">{error && "Une erreur est survenue"}</p>
       </div>
     </main>
   );
