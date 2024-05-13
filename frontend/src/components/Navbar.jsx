@@ -38,7 +38,6 @@ const Navbar = () => {
     try {
       const res = await fetch("http://localhost:3000/api/logout", {
         method: "GET",
-        credentials: "include", // Positionnez `credentials` ici
       });
 
       if (res.ok) {
