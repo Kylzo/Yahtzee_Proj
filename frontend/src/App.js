@@ -5,6 +5,7 @@ import Regles from "./pages/Regles.jsx";
 import Connexion from "./pages/Connexion.jsx";
 import Inscription from "./pages/Inscription.jsx";
 import Navbar from "./components/Navbar.jsx";
+import Profil from "./pages/Profil.jsx";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/rules" element={<Regles />} />
+          <Route exact path="/profil" element={<Profil />} />
           <Route exact path="/connexion" element={<Connexion />} />
           <Route exact path="/inscription" element={<Inscription />} />
         </Routes>

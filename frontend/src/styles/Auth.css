@@ -68,6 +68,19 @@ input {
     font-weight: bold;
 }
 
+.error-message {
+    color: red;
+    margin-top: 1rem;
+}
+
+.delete-btn {
+    border: none;
+    background: transparent;
+    color: red;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
 @media (min-width: 640px) {
     .auth {
         margin: 5rem auto 0 auto;

@@ -86,7 +86,7 @@ const Connexion = () => {
         <Link to="/inscription" className="link">
           Inscription
         </Link>
-        <p>{error && "Une erreur est survenue"}</p>
+        <p className="error-message">{error && "Une erreur est survenue"}</p>
       </p>
     </main>
   );
