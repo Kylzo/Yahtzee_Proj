@@ -7,8 +7,13 @@ const Connexion = () => {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { setIsAuthenticated } = useAuth();
+
+  const toggle = () => {
+    setOpen(!open);
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -56,12 +61,21 @@ const Connexion = () => {
         </div>
         <div className="label">
           <label htmlFor="password">Mot de passe</label>
-          <input
-            id="password"
-            name="password"
-            type="text"
-            onChange={handleChange}
-          />
+          <div className="eye-password">
+            <input
+              id="password"
+              name="password"
+              type={open === false ? "password" : "text"}
+              onChange={handleChange}
+            />
+            <div className=" hide-password">
+              {open === false ? (
+                <i className="fa-solid fa-eye" onClick={toggle}></i>
+              ) : (
+                <i className="fa-solid fa-eye-slash" onClick={toggle}></i>
+              )}
+            </div>
+          </div>
         </div>
         <button className="button">
           {loading ? "Chargement..." : "Se connecter"}
