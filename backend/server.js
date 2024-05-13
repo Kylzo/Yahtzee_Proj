@@ -1,17 +1,18 @@
-// server.js
 import express from "express";
-import dotenv from "dotenv";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import jwtMiddleware from "./middlewares/jwt.middleware.js";
 import playerRoutes from "./routes/player.route.js";
 import authRoutes from "./routes/auth.route.js";
-import gameRoutes from "./routes/game.route.js"; // Ajout des routes de jeu
+import gameRoutes from "./routes/game.route.js";
+import dotenv from "dotenv";
 
 // Charger les variables d'environnement à partir du fichier .env
 dotenv.config();
 
 const app = express();
 
+app.use(cors()); // Utilisation du middleware CORS
 app.use(cookieParser());
 
 // Middleware pour l'analyse des corps de requête JSON (uniquement pour les requêtes POST, PUT, PATCH, etc.)
@@ -21,6 +22,17 @@ app.use((req, res, next) => {
   } else {
     next();
   }
+});
+
+// Middleware CORS pour autoriser les requêtes cross-origin
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
 });
 
 // Utilisation des routes d'authentification
