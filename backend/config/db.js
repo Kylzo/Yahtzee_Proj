@@ -93,11 +93,15 @@ async function initData() {
 }
 
 async function insertData() {
-  // Insertion de données fictives dans la table Role
+  // Insertion des rôles dans la table Role
   const insertRoleStatement = db.prepare(`
     INSERT INTO Role (id_role, role) VALUES
-    (1, 'admin'),
-    (2, 'player')
+  (0,'Anonyme'),
+  (1,'Joueur'),
+  (2,'GameHoster'),
+  (3,'GamePlayer'),
+  (4,'Modérateur'),
+  (5,'Admin')
   `);
   insertRoleStatement.run();
 
@@ -113,9 +117,9 @@ async function insertData() {
   // Insertion de données fictives dans la table Game
   const insertGameStatement = db.prepare(`
     INSERT INTO Game (id_game, id_creator, state) VALUES
-    (1, 1, 'ongoing'),
-    (2, 2, 'finished'),
-    (3, 3, 'waiting')
+    (1, 1, 'En cours'),
+    (2, 2, 'Terminée'),
+    (3, 3, 'Non commencée')
   `);
   insertGameStatement.run();
 
