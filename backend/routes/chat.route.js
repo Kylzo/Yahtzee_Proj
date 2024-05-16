@@ -9,7 +9,6 @@ import {
 
 const router = Router();
 
-// Routes pour le chat
 router.post("/chat", createMessage);
 router.get("/chat", getAllMessages);
 router.get("/chat/:id", getMessageById);

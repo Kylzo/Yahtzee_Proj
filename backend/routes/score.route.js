@@ -5,11 +5,10 @@ import {
   getScoreById,
   updateScore,
   deleteScore,
-} from "../controllers/score.controller";
+} from "../controllers/score.controller.js";
 
 const router = Router();
 
-// Routes pour les scores
 router.post("/scores", createScore);
 router.get("/scores", getAllScores);
 router.get("/scores/:id", getScoreById);

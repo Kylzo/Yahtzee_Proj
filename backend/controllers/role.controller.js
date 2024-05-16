@@ -1,12 +1,10 @@
-import sql from "better-sqlite3";
+import Role from "../models/role.model.js";
 
-const db = sql("yahtzee.db");
-
-export const createRole = (req, res) => {
+export const createRole = async (req, res) => {
   try {
     const { role } = req.body;
-    const result = db.prepare("INSERT INTO Role (role) VALUES (?)").run(role);
-    res.status(201).json({ id: result.lastInsertRowid, role });
+    const newRole = await Role.create(role);
+    res.status(201).json(newRole);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -15,9 +13,9 @@ export const createRole = (req, res) => {
   }
 };
 
-export const getAllRoles = (req, res) => {
+export const getAllRoles = async (req, res) => {
   try {
-    const roles = db.prepare("SELECT * FROM Role").all();
+    const roles = await Role.getAll();
     res.json(roles);
   } catch (error) {
     console.error(error);
@@ -27,10 +25,10 @@ export const getAllRoles = (req, res) => {
   }
 };
 
-export const getRoleById = (req, res) => {
+export const getRoleById = async (req, res) => {
   try {
     const { id } = req.params;
-    const role = db.prepare("SELECT * FROM Role WHERE id_role = ?").get(id);
+    const role = await Role.getById(id);
     if (!role) {
       return res
         .status(404)
@@ -45,19 +43,12 @@ export const getRoleById = (req, res) => {
   }
 };
 
-export const updateRole = (req, res) => {
+export const updateRole = async (req, res) => {
   try {
     const { id } = req.params;
     const { role } = req.body;
-    const result = db
-      .prepare("UPDATE Role SET role = ? WHERE id_role = ?")
-      .run(role, id);
-    if (result.changes === 0) {
-      return res
-        .status(404)
-        .json({ message: "Le rôle spécifié n'a pas été trouvé." });
-    }
-    res.json({ id, role });
+    const updatedRole = await Role.update(id, role);
+    res.json(updatedRole);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -66,10 +57,10 @@ export const updateRole = (req, res) => {
   }
 };
 
-export const deleteRoleById = (req, res) => {
+export const deleteRoleById = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = db.prepare("DELETE FROM Role WHERE id_role = ?").run(id);
+    const result = await Role.deleteById(id);
     if (result.changes === 0) {
       return res
         .status(404)

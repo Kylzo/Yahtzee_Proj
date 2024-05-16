@@ -6,6 +6,7 @@ import playerRoutes from "./routes/player.route.js";
 import authRoutes from "./routes/auth.route.js";
 import gameRoutes from "./routes/game.route.js";
 import roleRoutes from "./routes/role.route.js";
+import scoreRoutes from "./routes/score.route.js";
 import dotenv from "dotenv";
 
 // Charger les variables d'environnement à partir du fichier .env
@@ -41,6 +42,7 @@ app.use("/api", authRoutes);
 // Utilisation des routes de jeu
 app.use("/api", gameRoutes);
 app.use("/api", roleRoutes);
+app.use("/api", scoreRoutes);
 
 // Utilisation du middleware JWT après les routes d'authentification
 app.use(jwtMiddleware);
@@ -49,7 +51,7 @@ app.use(jwtMiddleware);
 app.use("/api", playerRoutes);
 
 // Démarrage du serveur
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

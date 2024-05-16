@@ -13,16 +13,14 @@ const jwtMiddleware = (req, res, next) => {
   }
 
   try {
-    // Vérifier la validité du jeton JWT en utilisant la clé secrète stockée dans les variables d'environnement
+    // Vérifier la validité du jeton JWT
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
 
     // Ajouter les informations utilisateur décryptées à la requête
     req.playerId = decodedToken.playerId;
 
-    // Passer à l'étape suivante
     next();
   } catch (error) {
-    // En cas d'erreur de vérification du jeton JWT
     return res
       .status(401)
       .json({ message: "Accès non autorisé - Jeton JWT invalide" });
