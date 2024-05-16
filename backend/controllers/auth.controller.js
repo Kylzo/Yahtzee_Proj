@@ -71,10 +71,10 @@ const authController = {
 
       // Stocker le jeton JWT dans les cookies
       res.cookie("jwt-token", token, {
-        maxAge: 3600000, // Durée de validité du cookie en millisecondes (1 heure)
-        httpOnly: true, // Rend le cookie inaccessible via JavaScript côté client
-        secure: true, // Le cookie ne sera envoyé que via HTTPS
-        sameSite: "strict", // Le cookie n'est envoyé que pour les requêtes provenant du même site
+        maxAge: 3600000,
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
       });
 
       res.status(200).json({ message: "Connexion réussie", token });

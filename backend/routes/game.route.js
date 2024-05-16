@@ -9,7 +9,6 @@ import {
 
 const router = Router();
 
-// Routes pour les jeux
 router.post("/games", createGame);
 router.get("/games", getAllGames);
 router.get("/games/:id", getGameById);
