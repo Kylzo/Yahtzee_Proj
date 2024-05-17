@@ -1,14 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import "../styles/PopupChat.css";
 import io from "socket.io-client";
+import "../styles/PopupChat.css";
 
 const PopupChat = ({ openChat, closePopupChat }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [user, setUser] = useState(null);
   const socketRef = useRef(null);
 
   useEffect(() => {
+    // Fetch user data
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/current-user", {
+          method: "GET",
+          credentials: "include",
+        });
+        const userData = await response.json();
+        setUser(userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUser();
+
     socketRef.current = io("http://localhost:3000");
 
     socketRef.current.on("connect", () => {
@@ -30,8 +47,8 @@ const PopupChat = ({ openChat, closePopupChat }) => {
   }, []);
 
   const sendMessage = () => {
-    if (newMessage.trim() === "") return;
-    const messageData = { user: "Username", message: newMessage };
+    if (newMessage.trim() === "" || !user) return;
+    const messageData = { user: user.pseudo, message: newMessage };
     socketRef.current.emit("chat_message", messageData);
     setNewMessage("");
   };
