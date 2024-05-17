@@ -3,6 +3,18 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+export async function currentUser(req, res) {
+  try {
+    const user = await Player.getById(req.playerId);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({
+      message:
+        "Une erreur est survenue lors de la récupération des informations de l'utilisateur",
+    });
+  }
+}
+
 export function getAllPlayers(req, res) {
   try {
     const players = Player.getAll();
@@ -31,8 +43,7 @@ export function playerInfo(req, res) {
 export function updatePlayer(req, res) {
   try {
     const playerId = req.query.id_player;
-    const { avatar, pseudo, email, password, id_role } = req.body;
-    Player.update(playerId, avatar, pseudo, email, password, id_role);
+    Player.update(playerId, req.body);
     console.log("Joueur mis à jour avec succès");
     res.status(200).json({ message: "Joueur mis à jour avec succès" });
   } catch (error) {
