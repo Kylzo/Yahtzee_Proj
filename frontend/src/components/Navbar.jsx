@@ -8,7 +8,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const popupRef = useRef();
   const title = "ahtzee";
-  const jeu = "Jeu";
+  const home = "Accueil";
   const regles = "Règles";
   const login = "Connexion";
   const register = "Inscription";
@@ -63,7 +63,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="link-items">
-            <Link to="/">{jeu}</Link>
+            <Link to="/">{home}</Link>
             <Link to="/rules">{regles}</Link>
           </div>
         </div>
@@ -96,7 +96,7 @@ const Navbar = () => {
                 <ul className="mobile-link-items">
                   <li>
                     <Link to="/" onClick={() => setOpen(false)}>
-                      {jeu}
+                      {home}
                     </Link>
                   </li>
                   <li>
