@@ -12,9 +12,6 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors()); // Utilisation du middleware CORS
-app.use(cookieParser());
-
 // Middleware pour l'analyse des corps de requête JSON (uniquement pour les requêtes POST, PUT, PATCH, etc.)
 app.use((req, res, next) => {
   if (req.method === "POST" || req.method === "PUT" || req.method === "PATCH") {
@@ -24,7 +21,6 @@ app.use((req, res, next) => {
   }
 });
 
-// Middleware CORS pour autoriser les requêtes cross-origin
 app.use(
   cors({
     origin: "http://localhost:3001",
@@ -32,7 +28,11 @@ app.use(
     allowedHeaders: "Content-Type, Authorization",
     credentials: true,
   })
-);
+); // Utilisation du middleware CORS
+
+app.use(cookieParser());
+
+app.use(express.json());
 
 // Utilisation des routes d'authentification
 app.use("/api", authRoutes);

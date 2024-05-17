@@ -18,7 +18,6 @@ const jwtMiddleware = (req, res, next) => {
 
     // Ajouter les informations utilisateur décryptées à la requête
     req.playerId = decodedToken.playerId;
-
     // Passer à l'étape suivante
     next();
   } catch (error) {

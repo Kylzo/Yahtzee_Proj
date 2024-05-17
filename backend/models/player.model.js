@@ -23,16 +23,31 @@ const Player = {
       .run(pseudo, email, password, defaultRoleId, avatar);
   },
 
-  update: (id, pseudo, email, password, avatar, id_role) => {
-    return db
-      .prepare(
-        `
-      UPDATE Player 
-      SET pseudo = ?, email = ?, password = ?, id_role = ?, avatar = ?
-      WHERE id_player = ?
-      `
-      )
-      .run(pseudo, email, password, id_role, avatar, id);
+  update: (id, player) => {
+    const sqlData = [];
+    const runData = [];
+
+    if (player.pseudo) {
+      sqlData.push("pseudo = ?");
+      runData.push(player.pseudo);
+    }
+
+    if (player.email) {
+      sqlData.push("email = ?");
+      runData.push(player.email);
+    }
+
+    if (player.password) {
+      sqlData.push("password = ?");
+      runData.push(player.password);
+    }
+
+    runData.push(id);
+
+    let sqlTxt =
+      "UPDATE Player SET " + sqlData.join(", ") + " WHERE id_player = ?";
+
+    return db.prepare(sqlTxt).run(...runData);
   },
 
   setDefaultRole: (roleId) => {

@@ -22,7 +22,7 @@ const authController = {
       const newPlayer = await Player.create(pseudo, email, password);
 
       // Générer un jeton JWT avec la clé secrète obtenue des variables d'environnement
-      const token = jwt.sign({ playerId: newPlayer.id }, secretKey, {
+      const token = jwt.sign({ playerId: newPlayer.id_player }, secretKey, {
         expiresIn: "1h",
       });
 
@@ -65,7 +65,7 @@ const authController = {
       }
 
       // Générer un jeton JWT
-      const token = jwt.sign({ playerId: player.id }, secretKey, {
+      const token = jwt.sign({ playerId: player.id_player }, secretKey, {
         expiresIn: "1h",
       });
 
