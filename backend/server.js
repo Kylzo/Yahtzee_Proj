@@ -25,9 +25,14 @@ const io = new Server(server, {
   },
 });
 
-app.use(cors());
-app.use(cookieParser());
-app.use(express.json());
+// Middleware pour l'analyse des corps de requête JSON (uniquement pour les requêtes POST, PUT, PATCH, etc.)
+app.use((req, res, next) => {
+  if (req.method === "POST" || req.method === "PUT" || req.method === "PATCH") {
+    express.json()(req, res, next);
+  } else {
+    next();
+  }
+});
 
 app.use(
   cors({
@@ -36,7 +41,11 @@ app.use(
     allowedHeaders: "Content-Type, Authorization",
     credentials: true,
   })
-);
+); // Utilisation du middleware CORS
+
+app.use(cookieParser());
+
+app.use(express.json());
 
 app.use("/api", authRoutes);
 app.use("/api", gameRoutes);
