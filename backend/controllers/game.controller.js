@@ -3,10 +3,8 @@ import Game from "../models/game.model.js";
 
 import dotenv from "dotenv";
 
-// Charger les variables d'environnement à partir du fichier .env
 dotenv.config();
 
-// Contrôleur pour créer une nouvelle partie
 export const createGame = async (req, res) => {
   try {
     const { id_creator, state } = req.body;
@@ -18,7 +16,6 @@ export const createGame = async (req, res) => {
   }
 };
 
-// Contrôleur pour obtenir toutes les parties
 export const getAllGames = async (req, res) => {
   try {
     const games = await Game.getAll();
@@ -34,7 +31,6 @@ export const getAllGames = async (req, res) => {
   }
 };
 
-// Contrôleur pour trouver une partie avec son ID
 export const getGameById = async (req, res) => {
   try {
     const gameId = req.params.id;
@@ -55,11 +51,10 @@ export const getGameById = async (req, res) => {
   }
 };
 
-// Contrôleur pour mettre à jour une partie
 export const updateGame = async (req, res) => {
   try {
     const gameId = req.params.id;
-    const { id_creator, state } = req.body; // Utiliser les paramètres de la base de données
+    const { id_creator, state } = req.body;
     const updatedGame = await Game.update(gameId, id_creator, state);
     res.status(200).json(updatedGame);
   } catch (error) {
@@ -68,13 +63,11 @@ export const updateGame = async (req, res) => {
   }
 };
 
-// Contrôleur pour supprimer une partie
 export const deleteGame = async (req, res) => {
   try {
     const gameId = req.params.id;
     const token = req.cookies["jwt-token"];
 
-    // Vérifiez si le token existe
     if (!token) {
       return res.status(401).json({
         message: "Vous devez être connecté pour supprimer une partie",

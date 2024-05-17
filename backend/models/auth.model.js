@@ -1,6 +1,5 @@
 import sql from "better-sqlite3";
 
-// Connexion à la base de données SQLite
 const db = sql("yahtzee.db");
 
 const Player = {

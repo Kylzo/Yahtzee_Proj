@@ -1,17 +1,18 @@
 import { Router } from "express";
 import {
-  assignRole,
-  getPlayerRole,
-  updatePlayerRole,
-  removePlayerRole,
-} from "../controllers/playerRole.controller";
+  createRole,
+  deleteRoleById,
+  getAllRoles,
+  getRoleById,
+  updateRole,
+} from "../controllers/role.controller.js";
 
 const router = Router();
 
-// Routes pour les rôles des joueurs
-router.post("/playerRoles", assignRole);
-router.get("/playerRoles/:id", getPlayerRole);
-router.put("/playerRoles/:id", updatePlayerRole);
-router.delete("/playerRoles/:id", removePlayerRole);
+router.post("/roles", createRole);
+router.get("/roles", getAllRoles);
+router.get("/roles/:id", getRoleById);
+router.put("/roles/:id", updateRole);
+router.delete("/roles/:id", deleteRoleById);
 
 export default router;
