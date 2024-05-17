@@ -1,32 +1,34 @@
 import express from "express";
+import http from "http";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import jwtMiddleware from "./middlewares/jwt.middleware.js";
+import chatMiddleware from "./middlewares/chat.middleware.js";
+import { sendMessage, getChatHistory } from "./controllers/chat.controller.js";
 import playerRoutes from "./routes/player.route.js";
 import authRoutes from "./routes/auth.route.js";
 import gameRoutes from "./routes/game.route.js";
 import roleRoutes from "./routes/role.route.js";
 import scoreRoutes from "./routes/score.route.js";
+import chatRoutes from "./routes/chat.route.js";
 import dotenv from "dotenv";
+import { Server } from "socket.io";
 
-// Charger les variables d'environnement à partir du fichier .env
 dotenv.config();
 
 const app = express();
-
-app.use(cors()); // Utilisation du middleware CORS
-app.use(cookieParser());
-
-// Middleware pour l'analyse des corps de requête JSON (uniquement pour les requêtes POST, PUT, PATCH, etc.)
-app.use((req, res, next) => {
-  if (req.method === "POST" || req.method === "PUT" || req.method === "PATCH") {
-    express.json()(req, res, next);
-  } else {
-    next();
-  }
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3001",
+    methods: ["GET", "POST"],
+  },
 });
 
-// Middleware CORS pour autoriser les requêtes cross-origin
+app.use(cors());
+app.use(cookieParser());
+app.use(express.json());
+
 app.use(
   cors({
     origin: "http://localhost:3001",
@@ -36,22 +38,30 @@ app.use(
   })
 );
 
-// Utilisation des routes d'authentification
 app.use("/api", authRoutes);
-
-// Utilisation des routes de jeu
 app.use("/api", gameRoutes);
 app.use("/api", roleRoutes);
 app.use("/api", scoreRoutes);
 
-// Utilisation du middleware JWT après les routes d'authentification
 app.use(jwtMiddleware);
 
-// Utilisation des routes du joueur après le middleware JWT
 app.use("/api", playerRoutes);
+app.use("/api/chat", chatRoutes);
 
-// Démarrage du serveur
+io.on("connection", (socket) => {
+  console.log("a user connected");
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+
+  socket.on("chat_message", (msg) => {
+    console.log("message: " + msg);
+    io.emit("chat_message", msg);
+  });
+});
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
