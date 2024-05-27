@@ -23,7 +23,6 @@ const io = new Server(server, {
   },
 });
 
-// Middleware pour l'analyse des corps de requête JSON (uniquement pour les requêtes POST, PUT, PATCH, etc.)
 app.use(express.json());
 
 app.use(
@@ -33,7 +32,7 @@ app.use(
     allowedHeaders: "Content-Type, Authorization",
     credentials: true,
   })
-); // Utilisation du middleware CORS
+);
 
 app.use(cookieParser());
 
@@ -50,13 +49,26 @@ app.use("/api/chat", chatRoutes);
 io.on("connection", (socket) => {
   console.log("a user connected");
 
+  socket.join("general");
+  console.log("User joined general room");
+
+  socket.on("join_private_room", (room) => {
+    socket.join(room);
+    console.log(`User joined private room: ${room}`);
+  });
+
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
 
-  socket.on("chat_message", (msg) => {
-    console.log("message: " + msg);
-    io.emit("chat_message", msg);
+  socket.on("general_chat_message", (msg) => {
+    console.log("General message: ", msg);
+    io.to("general").emit("chat_message", msg);
+  });
+
+  socket.on("private_chat_message", (msg) => {
+    console.log(`Private message in ${msg.room}: ${msg.message}`);
+    io.to(msg.room).emit("chat_message", msg);
   });
 });
 

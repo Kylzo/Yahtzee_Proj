@@ -6,6 +6,7 @@ import Connexion from "./pages/Connexion.jsx";
 import Inscription from "./pages/Inscription.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Profil from "./pages/Profil.jsx";
+import Jeu from "./pages/Jeu.jsx";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route exact path="/profil" element={<Profil />} />
           <Route exact path="/connexion" element={<Connexion />} />
           <Route exact path="/inscription" element={<Inscription />} />
+          <Route exact path="/jeu" element={<Jeu />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

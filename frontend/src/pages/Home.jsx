@@ -1,6 +1,37 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
 
 const Home = () => {
+  const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const response = await fetch("http://localhost:3000/api/current-user", {
+        method: "GET",
+        credentials: "include",
+      });
+      if (response.ok) {
+        setIsLoggedIn(true);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
+
+  const handleButtonClick = (multiplayer = false) => {
+    if (isLoggedIn) {
+      navigate("/jeu", { state: { multiplayer } });
+    } else {
+      setShowLoginMessage(true);
+      setTimeout(() => {
+        navigate("/connexion");
+      }, 1000); // Afficher la page de connexion après 3 secondes
+    }
+  };
+
   return (
     <main className="home">
       <div className="home-group">
@@ -12,9 +43,19 @@ const Home = () => {
           !
         </p>
         <div className="home-container-button">
-          <button>Jouer en multijoueur</button>
-          <button>Jouer en solo</button>
+          <button onClick={() => handleButtonClick(true)}>
+            Jouer en multijoueur
+          </button>
+          <button onClick={() => handleButtonClick(false)}>
+            Jouer en solo
+          </button>
         </div>
+        {showLoginMessage && (
+          <p className="login-message">
+            Vous devez être connecté pour jouer. Redirection vers la page de
+            connexion...
+          </p>
+        )}
       </div>
     </main>
   );
