@@ -1,10 +1,16 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import PopupChat from "../components/PopupChat";
 import RollDice from "../components/RollDice";
 import "../styles/Jeu.css";
 
 const Jeu = () => {
   const [openChat, setOpenChat] = useState(false);
+  const location = useLocation();
+  const { multiplayer, id_game } = location.state || {
+    multiplayer: false,
+    id_game: null,
+  };
 
   const openPopupChat = () => {
     setOpenChat(!openChat);
@@ -16,7 +22,6 @@ const Jeu = () => {
 
   return (
     <main className="jeu">
-      {/* Button paramètres */}
       <div className="container-action-btn">
         <button className="action-btn">
           <i className="fa-solid fa-gear"></i>
@@ -26,13 +31,19 @@ const Jeu = () => {
         </button>
       </div>
 
-      {/* Les dés + le boutton pour lancer les dés */}
       <div>
         <RollDice />
       </div>
 
-      {/* Chat */}
-      <PopupChat openChat={openChat} closePopupChat={closePopupChat} />
+      <div className="game-mode">
+        {multiplayer ? <p>Mode Multijoueur</p> : <p>Mode Solo</p>}
+      </div>
+
+      <PopupChat
+        openChat={openChat}
+        closePopupChat={closePopupChat}
+        id_game={id_game}
+      />
     </main>
   );
 };
