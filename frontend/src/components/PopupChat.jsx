@@ -1,18 +1,43 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import "../styles/PopupChat.css";
 import io from "socket.io-client";
+import "../styles/PopupChat.css";
 
-const PopupChat = ({ openChat, closePopupChat }) => {
+const PopupChat = ({ openChat, closePopupChat, id_game }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [user, setUser] = useState(null);
+  const [currentRoom, setCurrentRoom] = useState("general");
   const socketRef = useRef(null);
 
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/current-user", {
+          method: "GET",
+          credentials: "include",
+        });
+        const userData = await response.json();
+        setUser(userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUser();
+
     socketRef.current = io("http://localhost:3000");
 
     socketRef.current.on("connect", () => {
       console.log("Connected to socket.io server");
+
+      if (id_game) {
+        const roomName = `game_${id_game}`;
+        socketRef.current.emit("join_private_room", roomName);
+        console.log(`User joined private room: ${roomName}`);
+      } else {
+        console.log("id_game is undefined");
+      }
     });
 
     socketRef.current.on("disconnect", () => {
@@ -27,13 +52,35 @@ const PopupChat = ({ openChat, closePopupChat }) => {
     return () => {
       socketRef.current.disconnect();
     };
-  }, []);
+  }, [id_game]);
 
   const sendMessage = () => {
-    if (newMessage.trim() === "") return;
-    const messageData = { user: "Username", message: newMessage };
-    socketRef.current.emit("chat_message", messageData);
+    if (newMessage.trim() === "" || !user) return;
+    const messageData = {
+      user: user.pseudo,
+      message: newMessage,
+      room: currentRoom,
+    };
+    socketRef.current.emit(
+      `${currentRoom === "general" ? "general" : "private"}_chat_message`,
+      messageData
+    );
     setNewMessage("");
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
+  const switchRoom = (room) => {
+    setCurrentRoom(room);
+    setMessages([]);
+  };
+
+  const getMessageClass = (messageUser) => {
+    return messageUser === user?.pseudo ? "my-message" : "other-message";
   };
 
   const popupVariants = {
@@ -59,15 +106,25 @@ const PopupChat = ({ openChat, closePopupChat }) => {
           </div>
 
           <div className="chat-container">
+            <div className="chat-header">
+              <button onClick={() => switchRoom("general")}>
+                General Chat
+              </button>
+              <button onClick={() => switchRoom(`game_${id_game}`)}>
+                Private Chat
+              </button>
+            </div>
             <ul className="list-chat">
-              {messages.map((message, index) => (
-                <li key={index}>
-                  <div className="message-section">
-                    <p className="user">{message.user}</p>
-                    <p className="content">{message.message}</p>
-                  </div>
-                </li>
-              ))}
+              {messages
+                .filter((message) => message.room === currentRoom)
+                .map((message, index) => (
+                  <li key={index} className={getMessageClass(message.user)}>
+                    <div className="message-section">
+                      <p className="user">{message.user}</p>
+                      <p className="content">{message.message}</p>
+                    </div>
+                  </li>
+                ))}
             </ul>
           </div>
 
@@ -78,6 +135,7 @@ const PopupChat = ({ openChat, closePopupChat }) => {
               className="input-message"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
             <button className="send-message-btn" onClick={sendMessage}>
               Envoyer
