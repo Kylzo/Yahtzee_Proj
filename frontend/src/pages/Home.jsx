@@ -11,7 +11,6 @@ const Home = () => {
     const checkLoginStatus = async () => {
       const response = await fetch("http://localhost:3000/api/current-user", {
         method: "GET",
-        credentials: "include",
       });
       if (response.ok) {
         setIsLoggedIn(true);
