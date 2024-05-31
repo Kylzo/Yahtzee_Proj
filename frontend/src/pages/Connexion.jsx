@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
 import { useAuth } from "../context/AuthContext.js";
-import Cookies from "js-cookie"; // Ajout du package js-cookie
+import Cookies from "js-cookie";
 
 const Connexion = () => {
   const [formData, setFormData] = useState({});
@@ -33,7 +33,7 @@ const Connexion = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-        credentials: "include", // Assurez-vous d'inclure les cookies dans la requête
+        credentials: "include",
       });
       const data = await res.json();
 
@@ -46,7 +46,7 @@ const Connexion = () => {
           expires: 1,
           secure: true,
           sameSite: "Strict",
-        }); // Utilisation de js-cookie pour définir le cookie
+        });
         navigate("/");
       } else {
         setError(data.message);
