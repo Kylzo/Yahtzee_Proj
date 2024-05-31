@@ -9,11 +9,22 @@ const Home = () => {
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const response = await fetch("http://localhost:3000/api/current-user", {
-        method: "GET",
-      });
-      if (response.ok) {
-        setIsLoggedIn(true);
+      try {
+        const response = await fetch("http://localhost:3000/api/current-user", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (response.ok) {
+          setIsLoggedIn(true);
+        } else {
+          console.error(
+            "Error fetching login status:",
+            response.status,
+            response.statusText
+          );
+        }
+      } catch (error) {
+        console.error("Network error:", error);
       }
     };
 
@@ -27,7 +38,7 @@ const Home = () => {
       setShowLoginMessage(true);
       setTimeout(() => {
         navigate("/connexion");
-      }, 1000); // Afficher la page de connexion après 3 secondes
+      }, 3000);
     }
   };
 
@@ -35,12 +46,13 @@ const Home = () => {
     <main className="home">
       <div className="home-group">
         <h1>Yahtzee</h1>
-        <p className="home-description">
-          Venez jouer au meilleur jeu de tous les temps !
-          <br />
-          Vous ne serez absolument pas déçu et vivrez une expérience incroyable
-          !
-        </p>
+        <div className="home-description">
+          <p>Venez jouer au meilleur jeu de tous les temps !</p>
+          <p>
+            Vous ne serez absolument pas déçu et vivrez une expérience
+            incroyable !
+          </p>
+        </div>
         <div className="home-container-button">
           <button onClick={() => handleButtonClick(true)}>
             Jouer en multijoueur
