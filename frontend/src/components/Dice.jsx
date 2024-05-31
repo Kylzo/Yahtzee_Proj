@@ -1,5 +1,6 @@
+import React from "react";
+import PropTypes from "prop-types";
 import "../styles/Dice.css";
-import PropTypes from "prop-types"; // Pour la validation des types
 
 const Dice = ({ face, rolling, onClick, held }) => {
   return (
@@ -16,7 +17,7 @@ const Dice = ({ face, rolling, onClick, held }) => {
 Dice.propTypes = {
   face: PropTypes.string.isRequired, // Nom de la face du dé (ex. "one", "two")
   rolling: PropTypes.bool, // Indique si le dé est en cours de roulement
-  onClick: PropTypes.func, // Fonction à appeler lors d'un clic (facultatif)
+  onClick: PropTypes.func, // Fonction à appeler lors d'un clic
   held: PropTypes.bool, // Indique si le dé est retenu
 };
 

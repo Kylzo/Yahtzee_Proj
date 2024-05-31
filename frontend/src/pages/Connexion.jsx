@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
 import { useAuth } from "../context/AuthContext.js";
+import Cookies from "js-cookie"; // Ajout du package js-cookie
 
 const Connexion = () => {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Connexion = () => {
 
     try {
       setLoading(true);
-      setError(false);
+      setError("");
 
       const res = await fetch("http://localhost:3000/api/login", {
         method: "POST",
@@ -32,6 +33,7 @@ const Connexion = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include", // Assurez-vous d'inclure les cookies dans la requête
       });
       const data = await res.json();
 
@@ -40,20 +42,26 @@ const Connexion = () => {
       if (res.ok) {
         setIsAuthenticated(true);
         const { token } = data;
-        document.cookie = `jwt-token=${token}; max-age=3600; secure; samesite=strict`;
+        Cookies.set("jwt-token", token, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict",
+        }); // Utilisation de js-cookie pour définir le cookie
         navigate("/");
       } else {
         setError(data.message);
       }
     } catch (error) {
       setLoading(false);
-      setError(true);
+      setError(
+        "Une erreur est survenue lors de la connexion. Veuillez réessayer."
+      );
     }
   };
 
   return (
     <main className="auth">
-      <h1>Connectez vous à Yahtzee</h1>
+      <h1>Connectez-vous à Yahtzee</h1>
       <form onSubmit={handleSubmit}>
         <div className="label">
           <label htmlFor="email">Email</label>
@@ -68,7 +76,7 @@ const Connexion = () => {
               type={open === false ? "password" : "text"}
               onChange={handleChange}
             />
-            <div className=" hide-password">
+            <div className="hide-password">
               {open === false ? (
                 <i className="fa-solid fa-eye" onClick={toggle}></i>
               ) : (
@@ -77,7 +85,7 @@ const Connexion = () => {
             </div>
           </div>
         </div>
-        <button className="button">
+        <button className="button" type="submit" disabled={loading}>
           {loading ? "Chargement..." : "Se connecter"}
         </button>
       </form>
@@ -86,8 +94,8 @@ const Connexion = () => {
         <Link to="/inscription" className="link">
           Inscription
         </Link>
-        <p className="error-message">{error && "Une erreur est survenue"}</p>
       </p>
+      {error && <p className="error-message">{error}</p>}
     </main>
   );
 };

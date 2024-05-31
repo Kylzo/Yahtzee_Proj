@@ -1,0 +1,58 @@
+/* ScoreCard.css */
+
+.score-card {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.score-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.score-card th,
+.score-card td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.score-card th {
+  background-color: #f2f2f2;
+}
+
+.score-card button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.validated {
+  background-color: #d3d3d3;
+}
+
+.barré {
+  text-decoration: line-through;
+  color: red;
+}
+
+.combinations-info {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.combinations-info h3 {
+  margin-bottom: 10px;
+}
+
+.combinations-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.combinations-info li {
+  margin-bottom: 5px;
+}
+
+.total-row {
+  background-color: rgb(249, 248, 248);
+  font-weight: bold;
+}

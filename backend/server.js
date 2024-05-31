@@ -20,6 +20,7 @@ const io = new Server(server, {
   cors: {
     origin: "http://localhost:3001",
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
@@ -27,9 +28,10 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "*",
-    methods: "GET, POST, PUT, PATCH, DELETE",
-    allowedHeaders: "Content-Type, Authorization",
+    // origin: "*",
+    origin: ["http://localhost:3001", "http://90.38.31.45"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
