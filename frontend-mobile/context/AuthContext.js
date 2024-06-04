@@ -5,17 +5,21 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = await AsyncStorage.getItem("jwt-token");
-      setIsAuthenticated(!!token);
+      const storedToken = await AsyncStorage.getItem("jwt-token");
+      setIsAuthenticated(!!storedToken);
+      setToken(storedToken);
     };
     checkAuth();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, token, setToken }}
+    >
       {children}
     </AuthContext.Provider>
   );

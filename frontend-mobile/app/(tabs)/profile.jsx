@@ -3,20 +3,25 @@ import React, { useState, useEffect } from "react";
 import CustomButton from "../../components/CustomButton";
 import { useRouter } from "expo-router";
 import { useAuth } from "../../context/AuthContext.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const { setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated, token } = useAuth();
   const router = useRouter();
 
   const handleLogOut = async () => {
     try {
-      const res = await fetch("http://192.168.0.155:3000/api/logout", {
+      const res = await fetch("http://10.71.128.192:3000/api/logout", {
         method: "GET",
         credentials: "include",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (res.ok) {
+        await AsyncStorage.removeItem("jwt-token");
         setIsAuthenticated(false);
         router.push("/sign-in");
       } else {
@@ -31,14 +36,16 @@ const Profile = () => {
     const fetchUser = async () => {
       try {
         const response = await fetch(
-          "http://192.168.0.155:3000/api/current-user",
+          "http://10.71.128.192:3000/api/current-user",
           {
             method: "GET",
             credentials: "include",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         const userData = await response.json();
-        console.log(userData);
         setUser(userData);
       } catch (error) {
         console.log(error);
@@ -49,8 +56,10 @@ const Profile = () => {
       }
     };
 
-    fetchUser();
-  }, []);
+    if (token) {
+      fetchUser();
+    }
+  }, [token]);
 
   return (
     <View className="justify-center w-full h-full px-4">
