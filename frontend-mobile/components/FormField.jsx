@@ -6,6 +6,7 @@ import { icons } from "../constants";
 const FormField = ({
   title,
   value,
+  defaultValue,
   placeholder,
   handleChangeText,
   otherStyles,
@@ -15,12 +16,13 @@ const FormField = ({
 
   return (
     <View className={`space-y-2 ${otherStyles}`}>
-      <Text className="text-base text-black font-medium">{title}</Text>
+      <Text className="text-base font-medium text-black">{title}</Text>
 
       <View className="relative">
         <TextInput
-          className="w-full h-12 px-4 border border-black/60 text-black rounded-md focus:border-black"
+          className="w-full h-12 px-4 text-black border rounded-md border-black/60 focus:border-black"
           value={value}
+          defaultValue={defaultValue}
           placeholder={placeholder}
           placeholderTextColor="#f00"
           onChangeText={handleChangeText}
