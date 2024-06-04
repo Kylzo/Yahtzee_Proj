@@ -1,8 +1,8 @@
 /* PopupChat.css */
 
 .chat {
-  z-index: 100;
-  position: absolute;
+  z-index: 1000;
+  position: fixed;
   top: 0;
   right: 0;
   width: 100%;
@@ -33,6 +33,37 @@
   height: 84%;
   overflow-y: scroll;
   padding: 0.5rem 1.5rem 2rem 1.5rem;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eee;
+  border-radius: 10px;
+  position: relative;
+}
+
+.tabs .btn-chat-room {
+  width: 50%;
+  background: transparent;
+  border: none;
+  padding: 14px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.tabs .active {
+  background: white;
+  height: calc(100% - 10px);
+  width: calc(50% - 10px);
+  position: absolute;
+  top: 5px;
+  left: 0;
+  transform: translateX(5px);
+  border-radius: 8px;
+  box-shadow: 0 2px 2px #ccc;
+  transition: all 200ms;
 }
 
 .list-chat {

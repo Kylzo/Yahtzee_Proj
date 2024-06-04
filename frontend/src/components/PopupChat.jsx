@@ -9,6 +9,7 @@ const PopupChat = ({ openChat, closePopupChat, id_game }) => {
   const [user, setUser] = useState(null);
   const [currentRoom, setCurrentRoom] = useState("general");
   const socketRef = useRef(null);
+  const activeBtnRef = useRef(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -49,10 +50,33 @@ const PopupChat = ({ openChat, closePopupChat, id_game }) => {
       setMessages((prevMessages) => [...prevMessages, msg]);
     });
 
+    activeBtnRef.current = document.querySelector(".active");
+
     return () => {
       socketRef.current.disconnect();
     };
   }, [id_game]);
+
+  useEffect(() => {
+    const btns = document.querySelectorAll(".btn-chat-room");
+
+    const handleClick = (index) => {
+      if (activeBtnRef.current) {
+        const move = (100 / btns.length) * index;
+        activeBtnRef.current.style.left = move + "%";
+      }
+    };
+
+    btns.forEach((btn, index) => {
+      btn.onclick = () => handleClick(index);
+    });
+
+    return () => {
+      btns.forEach((btn) => {
+        btn.onclick = null;
+      });
+    };
+  }, [messages]);
 
   const sendMessage = () => {
     if (newMessage.trim() === "" || !user) return;
@@ -106,14 +130,22 @@ const PopupChat = ({ openChat, closePopupChat, id_game }) => {
           </div>
 
           <div className="chat-container">
-            <div className="chat-header">
-              <button onClick={() => switchRoom("general")}>
+            <div className="tabs">
+              <div class="active"></div>
+              <button
+                onClick={() => switchRoom("general")}
+                className="btn-chat-room"
+              >
                 General Chat
               </button>
-              <button onClick={() => switchRoom(`game_${id_game}`)}>
+              <button
+                onClick={() => switchRoom(`game_${id_game}`)}
+                className="btn-chat-room"
+              >
                 Private Chat
               </button>
             </div>
+
             <ul className="list-chat">
               {messages
                 .filter((message) => message.room === currentRoom)
