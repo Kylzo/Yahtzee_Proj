@@ -75,10 +75,7 @@ export const deleteGame = async (req, res) => {
     }
 
     try {
-      // Vérifiez et décodez le token
       const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-
-      // Supprimez la partie indépendamment de l'identifiant du créateur
       await Game.delete(gameId);
       res.status(200).json({ message: "Jeu supprimé avec succès" });
     } catch (err) {

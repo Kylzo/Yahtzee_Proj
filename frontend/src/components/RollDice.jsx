@@ -52,56 +52,34 @@ const RollDice = ({ sides }) => {
       counts[value - 1]++;
     });
 
-    const newPotentialScores = {};
-    newPotentialScores["Un"] = counts[0] * 1;
-    newPotentialScores["Deux"] = counts[1] * 2;
-    newPotentialScores["Trois"] = counts[2] * 3;
-    newPotentialScores["Quatre"] = counts[3] * 4;
-    newPotentialScores["Cinq"] = counts[4] * 5;
-    newPotentialScores["Six"] = counts[5] * 6;
-
-    // Brelan
-    newPotentialScores["Brelan"] = counts.some((count) => count >= 3)
-      ? dice.reduce((acc, die) => acc + Object.values(die)[0], 0)
-      : 0;
-
-    // Carré
-    newPotentialScores["Carré"] = counts.some((count) => count >= 4)
-      ? dice.reduce((acc, die) => acc + Object.values(die)[0], 0)
-      : 0;
-
-    // Full House
-    newPotentialScores["Full"] =
-      counts.includes(3) && counts.includes(2) ? 25 : 0;
-
-    // Petite Suite
-    newPotentialScores["Petite Suite"] = [0, 1, 2, 3].every(
-      (i) => counts[i] >= 1
-    )
-      ? 25
-      : [1, 2, 3, 4].every((i) => counts[i] >= 1)
-      ? 25
-      : [2, 3, 4, 5].every((i) => counts[i] >= 1)
-      ? 25
-      : 0;
-
-    // Grande Suite
-    newPotentialScores["Grande Suite"] = [0, 1, 2, 3, 4].every(
-      (i) => counts[i] >= 1
-    )
-      ? 40
-      : [1, 2, 3, 4, 5].every((i) => counts[i] >= 1)
-      ? 40
-      : 0;
-
-    // Yams
-    newPotentialScores["Yams"] = counts.some((count) => count === 5) ? 50 : 0;
-
-    // Chance
-    newPotentialScores["Chance"] = dice.reduce(
-      (acc, die) => acc + Object.values(die)[0],
-      0
-    );
+    const newPotentialScores = {
+      Un: counts[0] * 1,
+      Deux: counts[1] * 2,
+      Trois: counts[2] * 3,
+      Quatre: counts[3] * 4,
+      Cinq: counts[4] * 5,
+      Six: counts[5] * 6,
+      Brelan: counts.some((count) => count >= 3)
+        ? dice.reduce((acc, die) => acc + Object.values(die)[0], 0)
+        : 0,
+      Carré: counts.some((count) => count >= 4)
+        ? dice.reduce((acc, die) => acc + Object.values(die)[0], 0)
+        : 0,
+      Full: counts.includes(3) && counts.includes(2) ? 25 : 0,
+      "Petite Suite":
+        [0, 1, 2, 3].every((i) => counts[i] >= 1) ||
+        [1, 2, 3, 4].every((i) => counts[i] >= 1) ||
+        [2, 3, 4, 5].every((i) => counts[i] >= 1)
+          ? 25
+          : 0,
+      "Grande Suite":
+        [0, 1, 2, 3, 4].every((i) => counts[i] >= 1) ||
+        [1, 2, 3, 4, 5].every((i) => counts[i] >= 1)
+          ? 40
+          : 0,
+      Yams: counts.some((count) => count === 5) ? 50 : 0,
+      Chance: dice.reduce((acc, die) => acc + Object.values(die)[0], 0),
+    };
 
     setPotentialScores(newPotentialScores);
   };
@@ -141,13 +119,6 @@ const RollDice = ({ sides }) => {
       <button
         onClick={roll}
         disabled={rolling || rollCount >= maxRolls}
-        style={
-          rollCount >= maxRolls
-            ? { cursor: "not-allowed", background: "red" }
-            : rollCount >= 0
-            ? { cursor: "pointer", background: "green" }
-            : { cursor: "pointer" }
-        }
         className="btn-roll"
       >
         {rolling
