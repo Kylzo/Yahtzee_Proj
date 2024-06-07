@@ -119,6 +119,13 @@ const RollDice = ({ sides }) => {
       <button
         onClick={roll}
         disabled={rolling || rollCount >= maxRolls}
+        style={
+          rollCount >= maxRolls
+            ? { cursor: "not-allowed", background: "red" }
+            : rollCount >= 0
+            ? { cursor: "pointer", background: "green" }
+            : { cursor: "pointer" }
+        }
         className="btn-roll"
       >
         {rolling
