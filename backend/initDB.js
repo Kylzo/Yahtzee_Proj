@@ -126,9 +126,9 @@ function resetDatabase() {
 
   const insertGameStatement = db.prepare(`
       INSERT INTO Game (id_game, id_creator, state) VALUES
-      (1, 1, 'ongoing'),
-      (2, 2, 'finished'),
-      (3, 3, 'waiting')
+      (1, 1, 'En cours'),
+      (2, 2, 'Terminée'),
+      (3, 3, 'En attente')
     `);
   insertGameStatement.run();
 
