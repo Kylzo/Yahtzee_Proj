@@ -18,7 +18,7 @@
 .home-container-button {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items in the column */
+  align-items: center;
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -37,7 +37,7 @@
 
 .dice-image {
   margin-top: 10px;
-  width: 100px; /* Adjust the size as needed */
+  width: 100px;
   height: auto;
 }
 
@@ -71,6 +71,6 @@
   }
 
   .dice-image {
-    width: 150px; /* Adjust the size as needed for larger screens */
+    width: 150px;
   }
 }

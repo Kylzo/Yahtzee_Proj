@@ -18,7 +18,7 @@ const Profil = () => {
   };
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value); // Met à jour l'état du mot de passe de confirmation
+    setPassword(e.target.value);
   };
 
   const handleSubmit = async (e) => {

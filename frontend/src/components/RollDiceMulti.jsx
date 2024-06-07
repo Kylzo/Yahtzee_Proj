@@ -5,7 +5,7 @@ import TotalScore from "./TotalScore";
 import ScoreCardMulti from "./ScoreCardMulti";
 import "../styles/Dice.css";
 
-const socket = io("http://localhost:3001"); // Remplacez par l'URL de votre serveur si nécessaire
+const socket = io("http://localhost:3001");
 
 const RollDiceMulti = ({ sides }) => {
   const initialDice = Array(5)
@@ -15,12 +15,12 @@ const RollDiceMulti = ({ sides }) => {
   const [heldDice, setHeldDice] = useState([false, false, false, false, false]);
   const [rolling, setRolling] = useState(false);
   const [rollCount, setRollCount] = useState(0);
-  const [scores, setScores] = useState([{}, {}]); // Initialisé comme un tableau de deux objets vides
+  const [scores, setScores] = useState([{}, {}]);
   const [potentialScores, setPotentialScores] = useState({});
-  const [currentPlayer, setCurrentPlayer] = useState(0); // Suivre le joueur actuel
+  const [currentPlayer, setCurrentPlayer] = useState(0);
   const maxRolls = 3;
 
-  const playerColors = ["#FFDDC1", "#C1E1FF"]; // Couleurs pour chaque joueur
+  const playerColors = ["#FFDDC1", "#C1E1FF"];
 
   useEffect(() => {
     socket.on("gameState", (gameState) => {
@@ -155,7 +155,7 @@ const RollDiceMulti = ({ sides }) => {
     setDice(initialDice);
     setHeldDice([false, false, false, false, false]);
     setRollCount(0);
-    const newCurrentPlayer = (currentPlayer + 1) % 2; // Changer de joueur
+    const newCurrentPlayer = (currentPlayer + 1) % 2;
     setCurrentPlayer(newCurrentPlayer);
     const newGameState = {
       dice: initialDice,

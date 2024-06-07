@@ -36,7 +36,7 @@ export const getGameById = async (req, res) => {
     const gameId = req.params.id;
     const game = await Game.getById(gameId);
     if (!game) {
-      res.status(404).json({ message: "Partie non trouvé" });
+      res.status(404).json({ message: "Partie non trouvée" });
     } else {
       res.status(200).json(game);
     }
