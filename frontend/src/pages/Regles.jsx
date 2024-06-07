@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/Regles.css";
 import fiche_score from "../img/fiche_score.png";
+
 const Regles = () => {
   return (
     <div className="rules-container">
@@ -189,6 +190,12 @@ const Regles = () => {
           faible score sans trop de risque.
         </li>
       </ul>
+      <div className="creators">
+        <p>
+          Le jeu a été créé par Sarah Roperch, Théo Marchand et Flavien
+          Torralba.
+        </p>
+      </div>
     </div>
   );
 };

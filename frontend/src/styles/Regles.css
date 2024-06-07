@@ -75,6 +75,11 @@
   align-items: center;
   margin-top: 20px;
 }
+.creators {
+  margin-top: 2rem;
+  text-align: center;
+  font-weight: bold;
+}
 
 /* Styles pour les écrans jusqu'à 768px de largeur */
 @media (max-width: 768px) {
