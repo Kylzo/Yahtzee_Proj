@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PopupChat from "../components/PopupChat";
 import RollDice from "../components/RollDice";
+import RollDiceMulti from "../components/RollDiceMulti"; // Import RollDiceMulti
 import "../styles/Jeu.css";
 
 const Jeu = () => {
@@ -32,7 +33,8 @@ const Jeu = () => {
       </div>
 
       <div>
-        <RollDice />
+        {multiplayer ? <RollDiceMulti /> : <RollDice />}{" "}
+        {/* Conditionnel pour le mode de jeu */}
       </div>
 
       <div className="game-mode">

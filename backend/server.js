@@ -11,6 +11,7 @@ import scoreRoutes from "./routes/score.route.js";
 import chatRoutes from "./routes/chat.route.js";
 import dotenv from "dotenv";
 import { Server } from "socket.io";
+import { handleGameConnection } from "./middlewares/game.middleware.js";
 
 dotenv.config();
 
@@ -28,7 +29,6 @@ app.use(express.json());
 
 app.use(
   cors({
-    // origin: "*",
     origin: ["http://localhost:3001", "http://90.38.31.45"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -51,6 +51,7 @@ app.use("/api/chat", chatRoutes);
 io.on("connection", (socket) => {
   console.log("a user connected");
 
+  // Chat
   socket.join("general");
   console.log("User joined general room");
 
@@ -72,6 +73,9 @@ io.on("connection", (socket) => {
     console.log(`Private message in ${msg.room}: ${msg.message}`);
     io.to(msg.room).emit("chat_message", msg);
   });
+
+  // Game
+  handleGameConnection(socket, io);
 });
 
 const PORT = process.env.PORT || 3000;

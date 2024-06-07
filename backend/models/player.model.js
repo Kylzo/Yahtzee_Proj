@@ -1,6 +1,11 @@
 import sql from "better-sqlite3";
+import crypto from "crypto";
 
 const db = sql("yahtzee.db");
+
+const hashPassword = (password) => {
+  return crypto.createHash("sha256").update(password).digest("hex");
+};
 
 const Player = {
   getAll: () => {
@@ -12,7 +17,8 @@ const Player = {
   },
 
   create: (pseudo, email, password, avatar = null) => {
-    const defaultRoleId = 2; // ID du rôle joueur par défaut à modifier
+    const hashedPassword = hashPassword(password);
+    const defaultRoleId = 2;
     return db
       .prepare(
         `
@@ -20,7 +26,7 @@ const Player = {
       VALUES (?, ?, ?, ?, ?)
       `
       )
-      .run(pseudo, email, password, defaultRoleId, avatar);
+      .run(pseudo, email, hashedPassword, defaultRoleId, avatar);
   },
 
   update: (id, player) => {
@@ -38,8 +44,9 @@ const Player = {
     }
 
     if (player.password) {
+      const hashedPassword = hashPassword(player.password);
       sqlData.push("password = ?");
-      runData.push(player.password);
+      runData.push(hashedPassword);
     }
 
     runData.push(id);

@@ -1,0 +1,53 @@
+.score-card {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.score-card h2 {
+  text-align: center;
+}
+
+.score-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.score-card th,
+.score-card td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.score-card .total-row td {
+  font-weight: bold;
+}
+
+.score-card .validated {
+  background-color: #c8e6c9;
+}
+
+.score-card .barré {
+  text-decoration: line-through;
+  color: #b0bec5;
+}
+
+.combinations-info {
+  margin-top: 20px;
+}
+
+.combinations-info h3 {
+  margin-bottom: 10px;
+}
+
+.combinations-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.combinations-info ul li {
+  margin: 5px 0;
+}

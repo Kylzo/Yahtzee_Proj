@@ -42,8 +42,8 @@ const Navbar = () => {
       });
 
       if (res.ok) {
-        setIsAuthenticated(false); // Mettez à jour l'état pour indiquer que l'utilisateur est déconnecté
-        navigate("/connexion"); // Redirigez vers la page de connexion
+        setIsAuthenticated(false);
+        navigate("/connexion");
       } else {
         console.error("Échec de la déconnexion");
       }

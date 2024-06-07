@@ -1,0 +1,64 @@
+.game-mode-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.mode-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.mode-selection button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.mode-selection button:hover {
+  background-color: #45a049;
+}
+
+.mode-selection button:focus {
+  outline: none;
+  box-shadow: 0 0 5px 2px rgba(72, 72, 72, 0.2);
+}
+
+.mode-selection button:active {
+  background-color: #3e8e41;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.btn-roll {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-roll:hover {
+  background-color: #0069d9;
+}
+
+.btn-roll:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
